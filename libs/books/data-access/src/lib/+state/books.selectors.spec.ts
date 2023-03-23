@@ -12,7 +12,8 @@ describe('Books Selectors', () => {
         {
           ...initialState,
           error: 'Unknown error',
-          loaded: true
+          loaded: true,
+          showLoader: false
         }
       )
     };
@@ -36,6 +37,12 @@ describe('Books Selectors', () => {
       const result = BooksSelectors.getBooksError(state);
 
       expect(result).toEqual('Unknown error');
+    });
+
+    it("getSpinner should return the current 'showLoader' state", () => {
+      const result = BooksSelectors.getSpinner(state);
+
+      expect(result).toBeFalsy();
     });
   });
 });

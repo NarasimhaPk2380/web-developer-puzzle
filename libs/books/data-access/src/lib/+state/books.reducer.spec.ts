@@ -13,7 +13,20 @@ describe('Books Reducer', () => {
       expect(result.loaded).toBe(true);
       expect(result.ids.length).toBe(3);
     });
-  });
+    it('should check searchBooks action with searchText', () => {
+      const searchAction = BooksActions.searchBooks({ term: 'angular' });
+      const result: State = reducer(initialState, searchAction);
+      expect(result.searchTerm).toBe('angular');
+    });
+    it('loadBookFailure should return with error message', () => {
+      const books = [createBook('A'), createBook('B'), createBook('C')];
+      const searchFailError = BooksActions.searchBooksFailure({ error: 'No books found.' });
+      const result: State = reducer({ ...initialState, ...books }, searchFailError);
+      expect(result.loaded).toBe(false);
+      expect(result.ids.length).toBe(0);
+      expect(result.error).toEqual('No books found.');
+    });
+});
 
   describe('unknown action', () => {
     it('should return the previous state', () => {
