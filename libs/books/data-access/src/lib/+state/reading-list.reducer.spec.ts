@@ -73,6 +73,32 @@ describe('Books Reducer', () => {
 
       expect(result.ids).toEqual(['A', 'B', 'C']);
     });
+    it('confirmedMarkAsRead should mark a book as read', () => {
+      const item = {
+        ...createReadingListItem('A'),
+        finished: true,
+        finishedDate: new Date().toISOString()
+      }
+      const action = ReadingListActions.confirmedMarkAsRead({
+        item
+      });
+      const result: State = reducer(state, action);
+      expect(result.entities['A']).toEqual(item);
+    });
+
+
+    it('failedMarkAsRead should not update finished status', () => {
+      const item = {
+        ...createReadingListItem('A'),
+        finished: true,
+        finishedDate: new Date().toISOString()
+      }
+      const action = ReadingListActions.failedMarkAsRead({
+        item
+      });
+      const result: State = reducer(state, action);
+      expect(result.entities['A'].finished).toEqual(false);
+    });
   });
 
   describe('unknown action', () => {
