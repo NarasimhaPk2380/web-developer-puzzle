@@ -7,6 +7,11 @@ form {
 .mat-form-field {
   width: 100%;
 }
+.search-books {
+  font-weight: 500;
+  color: $gray80;
+  margin-bottom: $spacing-xs;
+}
 
 .book-grid {
   display: grid;
@@ -69,6 +74,12 @@ form {
   min-height: 50vh;
   font-size: 1.5rem;
   color: $gray60;
+  .btn-link{
+    border: 0;
+    background: none;
+    color: $pink-accent;
+    cursor: pointer;
+  }
 }
 .errMsg {
   color: $pink-dark;
