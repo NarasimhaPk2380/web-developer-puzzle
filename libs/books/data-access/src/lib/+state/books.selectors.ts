@@ -12,6 +12,11 @@ export const getBooksState = createFeatureSelector<BooksPartialState, State>(
 
 const { selectAll } = booksAdapter.getSelectors();
 
+
+export const getSpinner = createSelector(getBooksState, (state) => {
+  return state.showLoader;
+});
+
 export const getBooksLoaded = createSelector(
   getBooksState,
   (state: State) => state.loaded

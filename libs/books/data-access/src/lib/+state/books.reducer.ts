@@ -10,6 +10,7 @@ export interface State extends EntityState<Book> {
   loaded: boolean;
   error?: string | null;
   searchTerm?: string;
+  showLoader: boolean,
 }
 
 export interface BooksPartialState {
@@ -19,7 +20,8 @@ export interface BooksPartialState {
 export const booksAdapter: EntityAdapter<Book> = createEntityAdapter<Book>();
 
 export const initialState: State = booksAdapter.getInitialState({
-  loaded: false
+  loaded: false,
+  showLoader: false
 });
 
 const booksReducer = createReducer(
@@ -28,19 +30,21 @@ const booksReducer = createReducer(
     ...state,
     searchTerm: term,
     loaded: false,
+    showLoader: true,
     error: null
   })),
   on(BooksActions.searchBooksSuccess, (state, action) =>
     booksAdapter.setAll(action.books, {
       ...state,
-      loaded: true
+      loaded: true,
+      showLoader: false,
     })
   ),
   on(BooksActions.searchBooksFailure, (state, { error }) => ({
     ...state,
     error
   })),
-  on(BooksActions.clearSearch, state => booksAdapter.removeAll(state))
+  on(BooksActions.clearSearch, state => booksAdapter.removeAll({...state, searchTerm: "", loaded: false, error: null, showLoader: false}))
 );
 
 export function reducer(state: State | undefined, action: Action) {

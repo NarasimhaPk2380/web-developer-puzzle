@@ -17,3 +17,8 @@ export const searchBooksFailure = createAction(
 );
 
 export const clearSearch = createAction('[Books Search Bar] Clear Search');
+
+export const setLoadingSpinner = createAction(
+  'SET LOADING SPINNER',
+  props<{ status: boolean }>()
+);
